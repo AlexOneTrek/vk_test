@@ -59,8 +59,7 @@ for event in longpoll.listen():
             elif response == "покажи попу":
                 vk.method('messages.send', {
                     'peer_id': event.object.peer_id,
-                    'message': '*фотка попы*',
-                    'keyboard': keyboard,
+                    'message': 'https://tv.ua/i/10/42/34/6/1042346/image_main/36b6b93822544a04c2aa89224abf4c48-quality_70Xresize_crop_1Xallow_enlarge_0Xw_750Xh_463.jpg',
                     'random_id': 0
                 })
 
