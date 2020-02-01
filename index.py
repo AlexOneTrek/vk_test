@@ -56,6 +56,14 @@ for event in longpoll.listen():
                     'random_id': 0
                 })
 
+            elif response == "покажи попу":
+                vk.method('messages.send', {
+                    'peer_id': event.object.peer_id,
+                    'message': '*фотка попы*',
+                    'keyboard': keyboard,
+                    'random_id': 0
+                })
+
             elif response == "чикибамбони":
                 vk.method('messages.send', {
                     'peer_id': event.object.peer_id,
