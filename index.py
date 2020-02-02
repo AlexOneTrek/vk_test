@@ -27,7 +27,16 @@ def phota():
     vk.method('messages.send',
               {'peer_id': event.object.peer_id, "attachment": 'photo-182910634_457239029', 'random_id': 0})
 
-photo_list = [photos, phota]
+def photak():
+    a = vk.method("photos.getMessagesUploadServer")
+    b = requests.post(a['upload_url'], files={'photo': open('popa3.jpg', 'rb')}).json()
+    c = vk.method("photos.saveMessagesPhoto", {'photo': b['photo'], 'server': b['server'], 'hash': b['hash']})[0]
+    d = 'photo{}_{}'.format(c['owner_id'], c['id'])
+    vk.method('messages.send',
+              {'peer_id': event.object.peer_id, "attachment": d, 'random_id': 0})
+    
+    
+photo_list = [photos, phota, photak]
 
 keyboard = {
 
