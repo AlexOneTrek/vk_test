@@ -17,7 +17,7 @@ def photos():
     c = vk.method("photos.saveMessagesPhoto", {'photo': b['photo'], 'server': b['server'], 'hash': b['hash']})[0]
     d = 'photo{}_{}'.format(c['owner_id'], c['id'])
     vk.method('messages.send',
-              {'peer_id': event.object.peer_id, "attachment": 'photo-182910634_457239020', 'random_id': 0})
+              {'peer_id': event.object.peer_id, "attachment": d, 'random_id': 0})
 
 def phota():
     a = vk.method("photos.getMessagesUploadServer")
@@ -25,7 +25,7 @@ def phota():
     c = vk.method("photos.saveMessagesPhoto", {'photo': b['photo'], 'server': b['server'], 'hash': b['hash']})[0]
     d = 'photo{}_{}'.format(c['owner_id'], c['id'])
     vk.method('messages.send',
-              {'peer_id': event.object.peer_id, "attachment": 'photo-182910634_457239024', 'random_id': 0})
+              {'peer_id': event.object.peer_id, "attachment": d, 'random_id': 0})
 
 photo_list = [photos, phota]
 
