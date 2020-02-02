@@ -1,12 +1,33 @@
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 import vk_api
 import json
+import requests
+import random
 
 # Connect
 vk = vk_api.VkApi(token="ed46e4b42cdd59ed93db354818f5b7851bbe8d6a1977a760ef5f10e640558af429597dc891bbefb3a81f5")
 vk._auth_token()
 vk.get_api()
 longpoll = VkBotLongPoll(vk, 182910634)
+
+
+def photos():
+    a = vk.method("photos.getMessagesUploadServer")
+    b = requests.post(a['upload_url'], files={'photo': open('popa.jpg', 'rb')}).json()
+    c = vk.method("photos.saveMessagesPhoto", {'photo': b['photo'], 'server': b['server'], 'hash': b['hash']})[0]
+    d = 'photo{}_{}'.format(c['owner_id'], c['id'])
+    vk.method('messages.send',
+              {'peer_id': event.object.peer_id, "attachment": 'photo-182910634_457239020', 'random_id': 0})
+
+def phota():
+    a = vk.method("photos.getMessagesUploadServer")
+    b = requests.post(a['upload_url'], files={'photo': open('popa2.jpg', 'rb')}).json()
+    c = vk.method("photos.saveMessagesPhoto", {'photo': b['photo'], 'server': b['server'], 'hash': b['hash']})[0]
+    d = 'photo{}_{}'.format(c['owner_id'], c['id'])
+    vk.method('messages.send',
+              {'peer_id': event.object.peer_id, "attachment": 'photo-182910634_457239024', 'random_id': 0})
+
+photo_list = [photos, phota]
 
 keyboard = {
 
@@ -15,15 +36,16 @@ keyboard = {
     "buttons": [
         [{
             "action": {
-                "type": "location",
-                "payload": "{\"button\": \"send_location\"}",
+                "type": "text",
+                "payload": "{\"button\": \"1\"}",
+                "label": "Покажи попу"
             }
         }],
 
         [{
             "action": {
                 "type": "text",
-                "payload": "{\"button\": \"3\"}",
+                "payload": "{\"button\": \"2\"}",
                 "label": "ЧикиБамбони"
             },
             "color": "positive"
@@ -57,11 +79,8 @@ for event in longpoll.listen():
                 })
 
             elif response == "покажи попу":
-                vk.method('messages.send', {
-                    'peer_id': event.object.peer_id,
-                    'message': 'https://tv.ua/i/10/42/34/6/1042346/image_main/36b6b93822544a04c2aa89224abf4c48-quality_70Xresize_crop_1Xallow_enlarge_0Xw_750Xh_463.jpg',
-                    'random_id': 0
-                })
+                papapapa = random.choice(photo_list)
+                papapapa()
 
             elif response == "чикибамбони":
                 vk.method('messages.send', {
@@ -78,3 +97,6 @@ for event in longpoll.listen():
                 })
             print(event.object)
             print(event.object.geo)
+
+
+
